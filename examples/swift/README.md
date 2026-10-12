@@ -6,7 +6,7 @@ Run on macOS with Xcode command-line tools and Rust installed:
 bash scripts/test-swift.sh
 ```
 
-The Rust workspace builds an example-only `cdylib` with an owned opaque document
+The Rust workspace builds an example-only `staticlib` with an owned opaque document
 handle. `Editor.swift` uses its C header/module map, decodes JSON patches and
 paints real `NSTextStorage` attributes. It verifies nested HTML/JavaScript,
 Unicode deletion including surrogate pairs, equivalence to a fresh complete

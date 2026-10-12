@@ -1,5 +1,6 @@
 //! Incremental editor coloring. Query whole syntax islands, retain unaffected
 //! colors, and return a UTF-16 patch. Malformed syntax conservatively refreshes all.
+#![doc = include_str!("../README.md")]
 mod injections;
 pub mod languages;
 
@@ -11,12 +12,14 @@ use std::{
 };
 use tree_sitter::{InputEdit, Node, Parser, Point, Query, QueryCursor, StreamingIterator, Tree};
 
+/// A colored run using absolute UTF-16 code-unit positions.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Span {
     pub start: usize,
     pub length: usize,
     pub style: u8,
 }
+/// Foreground reset range and replacement runs for an editor after its text edit.
 #[derive(Debug)]
 pub struct Patch {
     pub start: usize,
@@ -33,6 +36,7 @@ struct Run {
     style: u8,
 }
 
+/// Persistent parser and color state. Keep one per language/editor; serialize updates.
 pub struct Document {
     parser: Parser,
     query: Arc<Query>,
@@ -47,6 +51,7 @@ pub struct Document {
     last_range: Range<usize>,
 }
 impl Document {
+    /// Construct a document using a lowercase key from [`languages::LANGUAGES`].
     pub fn new(language: &str) -> Result<Self, String> {
         Self::new_at_depth(language, 0)
     }
@@ -85,6 +90,11 @@ impl Document {
             last_range: 0..0,
         })
     }
+    /// Submit full UTF-8 text and the last **applied** patch revision.
+    ///
+    /// Returned positions are absolute UTF-16 offsets. Text/attributes must already
+    /// reflect the edit when painting. Stale revisions request a full snapshot;
+    /// `force_full` also supports theme repaint without reparsing unchanged text.
     pub fn update(
         &mut self,
         source: &str,
