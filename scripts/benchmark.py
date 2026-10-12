@@ -22,20 +22,21 @@ def main():
     parser.add_argument("--timing", action="store_true", help="enforce 50%% median limit on matching hardware")
     args = parser.parse_args()
     path = Path(args.report).resolve()
-    subprocess.run(["cargo", "run", "--locked", "--release", "-p", "highlight-benchmark", "--", str(path)], cwd=ROOT, check=True)
-    if os.environ.get("HIGHLIGHT_AUDIT_ONLY"):
-        return
-    report = json.loads(path.read_text())
     model = subprocess.check_output(["sysctl", "-n", "hw.model"], text=True).strip() if platform.system() == "Darwin" else platform.node()
     architecture = {"aarch64": "arm64", "AMD64": "x86_64"}.get(platform.machine(), platform.machine())
-    report.update({
+    metadata = {
         "machine": {"model": model, "architecture": architecture},
         "os": platform.platform(),
         "measured_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "rustc": subprocess.check_output(["rustc", "--version"], text=True).strip(),
         "revision": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "dirty": bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True)),
-    })
+    }
+    subprocess.run(["cargo", "run", "--locked", "--release", "-p", "highlight-benchmark", "--", str(path)], cwd=ROOT, check=True)
+    if os.environ.get("HIGHLIGHT_AUDIT_ONLY"):
+        return
+    report = json.loads(path.read_text())
+    report.update(metadata)
     baseline = json.loads(args.baseline.read_text())
     rows = {(r["language"], r["entries"], r["scenario"]): r for r in baseline["workloads"]}
     same_machine = report["machine"] == baseline.get("machine")

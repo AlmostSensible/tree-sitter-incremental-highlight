@@ -490,7 +490,6 @@ fn source_edit(old: &str, new: &str) -> InputEdit {
 
 #[cfg(test)]
 #[path = "../tests/fixtures.rs"]
-#[cfg(test)]
 mod fixtures;
 
 #[cfg(test)]
