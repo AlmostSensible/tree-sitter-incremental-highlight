@@ -18,6 +18,8 @@ jobs:
           - os: ubuntu-latest
             toolchain: '1.88.0'
     runs-on: ${{ matrix.os }}
+    env:
+      RUSTUP_TOOLCHAIN: ${{ matrix.toolchain }}
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -38,6 +40,8 @@ jobs:
         run: bash scripts/test-swift.sh
   benchmark:
     runs-on: ubuntu-latest
+    env:
+      RUSTUP_TOOLCHAIN: stable
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
