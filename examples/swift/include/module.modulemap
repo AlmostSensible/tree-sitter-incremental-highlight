@@ -1,0 +1,4 @@
+module CIncrementalHighlight {
+    header "highlight.h"
+    export *
+}

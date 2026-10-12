@@ -1,0 +1,53 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  rust:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            toolchain: stable
+          - os: macos-latest
+            toolchain: stable
+          - os: ubuntu-latest
+            toolchain: '1.88.0'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: rustup toolchain install ${{ matrix.toolchain }} --profile minimal --component rustfmt --component clippy
+      - name: Format
+        run: cargo +${{ matrix.toolchain }} fmt --all --check
+      - name: Lints
+        run: cargo +${{ matrix.toolchain }} clippy --locked --workspace --all-targets -- -D warnings
+      - name: Tests
+        run: cargo +${{ matrix.toolchain }} test --locked --release --workspace
+      - name: Rust editor example
+        run: cargo +${{ matrix.toolchain }} run --locked --release --example editor
+      - name: Package verification
+        run: cargo +${{ matrix.toolchain }} package --locked
+      - name: Swift and AppKit example
+        if: runner.os == 'macOS'
+        run: bash scripts/test-swift.sh
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup toolchain install stable --profile minimal
+      - name: All languages and embeddings, with independent correctness oracles
+        run: python3 scripts/benchmark.py
+      - name: Upload raw samples and fixtures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-${{ github.sha }}
+          path: results/
+          retention-days: 30

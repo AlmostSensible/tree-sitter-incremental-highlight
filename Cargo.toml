@@ -1,0 +1,48 @@
+[package]
+name = "tree-sitter-incremental-highlight"
+version = "0.1.0-beta.1"
+edition = "2024"
+rust-version = "1.88"
+license = "MIT"
+description = "Incremental UTF-16 syntax highlighting and nested language injections built on Tree-sitter"
+repository = "https://github.com/almostsensible/tree-sitter-incremental-highlight"
+readme = "README.md"
+keywords = ["tree-sitter", "highlighting", "incremental", "editor", "utf16"]
+categories = ["text-editors", "parsing"]
+include = ["src/**", "queries/**", "tests/**", "examples/editor.rs", "Cargo.toml", "Cargo.lock", "README.md", "LICENSE", "THIRD-PARTY-NOTICES.txt"]
+
+[dependencies]
+tree-sitter = "=0.25.10"
+tree-sitter-json = "=0.24.8"
+tree-sitter-php = "=0.24.2"
+tree-sitter-bash = "=0.25.1"
+tree-sitter-c = "=0.24.2"
+tree-sitter-cpp = "=0.23.4"
+tree-sitter-c-sharp = "=0.23.5"
+tree-sitter-css = "=0.25.0"
+tree-sitter-diff = "=0.1.0"
+tree-sitter-dockerfile-updated = "=0.2.0"
+tree-sitter-go = "=0.25.0"
+tree-sitter-ini = "=1.4.0"
+tree-sitter-java = "=0.23.5"
+tree-sitter-javascript = "=0.25.0"
+tree-sitter-kotlin-ng = "=1.1.0"
+tree-sitter-make = "=1.1.1"
+tree-sitter-markdown-fork = "=0.7.3"
+tree-sitter-nginx = "=1.0.1"
+tree-sitter-python = "=0.25.0"
+tree-sitter-ruby = "=0.23.1"
+tree-sitter-rust = "=0.24.2"
+tree-sitter-scss = "=1.0.0"
+tree-sitter-sequel = "=0.3.11"
+tree-sitter-swift = "=0.7.4"
+tree-sitter-typescript = "=0.23.2"
+tree-sitter-xml = "=0.7.0"
+tree-sitter-yaml = "=0.7.2"
+tree-sitter-toml-ng = "=0.7.0"
+tree-sitter-html = "=0.23.2"
+
+[workspace]
+resolver = "3"
+members = ["benchmarks", "examples/swift/rust-bridge"]
+default-members = ["."]
