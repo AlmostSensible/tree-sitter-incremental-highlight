@@ -18,7 +18,7 @@ checksum. Do not move a published tag; corrections need another beta version.
 Do not enable automatic crates.io publishing in this beta. GitHub Git dependency
 installation uses the release tag or exact commit; Cargo.lock resolves it.
 
-PoliSSH should pin the exact release commit under its existing `polissh-syntax`
+The original editor should pin the exact release commit under its existing
 dependency alias, regenerate its lockfile, rebuild UniFFI and run native editor
 and integration tests. A library release does not automatically release the app.
 

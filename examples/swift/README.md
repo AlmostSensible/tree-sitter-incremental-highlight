@@ -21,4 +21,4 @@ advance `appliedRevision` after applying the patch on the main thread.
 The JSON C bridge demonstrates integration with minimal binding machinery. It
 is not a stable ABI, a benchmark of FFI latency, or a production Swift package.
 Production clients can provide their own typed C/UniFFI adapter around the public
-Rust API (PoliSSH uses UniFFI).
+Rust API (for example, a UniFFI adapter).

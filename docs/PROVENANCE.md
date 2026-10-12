@@ -1,7 +1,7 @@
 # Provenance
 
-The implementation was extracted on 2026-10-12 from the `polissh-syntax` Rust
-crate in PoliSSH. Application code, account/storage data, credentials, native
+The implementation was extracted on 2026-10-12 from a Rust highlighting backend
+built for a native macOS code editor. Application code, account/storage data, credentials, native
 app benchmarks and the experimental Rope path are excluded. The extracted
 engine keeps the tested behavior and its 30-language registry.
 
@@ -21,6 +21,6 @@ crates keep their own source-package licenses in the Cargo dependency graph.
 
 The historical baseline contains only generated synthetic fixture metadata and
 samples from a MacBookPro18,3/arm64. It was collected before extraction from a
-dirty PoliSSH checkout; its revision is provenance for those measurements, not a
+dirty application checkout; its revision is provenance for those measurements, not a
 commit in this repository. Its focused rerun metadata is intentionally preserved.
 New reports record this repository's actual commit and dirty state.

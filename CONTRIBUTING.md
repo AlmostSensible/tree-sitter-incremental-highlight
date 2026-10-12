@@ -1,7 +1,7 @@
 # Contributing
 
 Treat this repository as a reusable library, even when a change originates in
-PoliSSH. Keep editor/UI policy and application-specific behavior in consumers.
+the original editor. Keep editor/UI policy and application-specific behavior in consumers.
 
 Before opening a pull request, run the commands in README and describe the
 observable behavior change. A syntax fix needs a fixture that reproduces it and

@@ -2,7 +2,7 @@
 
 ## 0.1.0-beta.1
 
-First standalone beta, extracted from PoliSSH's Rust highlighting backend.
+First standalone beta, extracted from a native editor's Rust highlighting backend.
 
 - Persistent Tree-sitter documents with incremental queries and UTF-16 patches.
 - 30 language variants backed by 28 pinned grammar packages.
